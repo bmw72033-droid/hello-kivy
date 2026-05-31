@@ -31,7 +31,15 @@ jobs:
             zlib1g-dev libncurses5-dev libncursesw5-dev \
             libtinfo5 cmake libffi-dev libssl-dev
 
+      - name: Pre-accept Android licenses
+        run: |
+          mkdir -p ~/.android
+          echo "24333f8a63b6825ea9c5514f83c2829b004d1fee" > ~/.android/licenses/android-sdk-license
+          echo "d56f5187479451eabf01fb78af6dfcb131a6481e" >> ~/.android/licenses/android-sdk-license
+
       - name: Build APK
+        env:
+          ANDROID_SDK_ACCEPT_LICENSE: "True"
         run: |
           buildozer android debug
 
